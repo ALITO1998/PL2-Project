@@ -15,8 +15,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -33,8 +37,41 @@ public class LogIn extends Application{
 
     @Override
     public void start(Stage sec) throws Exception {
-         sec.setTitle("Login");
+        MenuBar menubar = new MenuBar();
+        Menu File = new Menu("File");
+        MenuItem Exit = new MenuItem("Exit");
+        Exit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0); 
+            }
+        });
+        MenuItem Restore = new MenuItem("Restore");
+        MenuItem Minimize = new MenuItem("Minimize");
+        MenuItem Maximize = new MenuItem("Maximize");
+        File.getItems().addAll(Restore,Minimize,Maximize,Exit);
+        Menu Edit = new Menu("Edit");
+        Menu View = new Menu("View");
+        Menu Help = new Menu("Help");
+        MenuItem help = new MenuItem("Help");
+        help.setOnAction((ActionEvent event) -> {
+            try {
+                Stage shelp = new Stage();
+                HelpPanal h = new HelpPanal();
+                h.start(shelp);
+            } catch (Exception ex) {
+                Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        Help.getItems().add(help);
+        menubar.getMenus().addAll(File,Edit,View,Help);
+        Text footer = new Text("Power by : @PL_best_Team");
+        sec.setTitle("Login");
         GridPane grid = new GridPane();
+        BorderPane root = new BorderPane();
+        root.setTop(menubar);
+        root.setCenter(grid);
+        root.setBottom(footer);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
@@ -44,7 +81,7 @@ public class LogIn extends Application{
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label userName = new Label("User ID :");
+        Label userName = new Label("User Name :");
         grid.add(userName, 0, 1);
 
         final TextField userTextField = new TextField();
@@ -68,18 +105,19 @@ public class LogIn extends Application{
 
         
 
-        Scene scene = new Scene(grid, 300, 275);
+        Scene scene = new Scene(root);
         sec.setScene(scene);
         sec.show();   
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
-                sec.close();
+                
                 Stage therd = new Stage();
                 switch(Ex_System.User_Type){
                     case "Lecturer" :
-                        if(true){//new filemanegar().login(userTextField.getText(),pwBox.getText())){
+                        if(true){// SystemUser().login(userTextField.getText(),pwBox.getText(),User_Type)){
+                            sec.close();
                             try {
                                 new LecturerPanal().start(therd);
                             } catch (Exception ex) {
@@ -90,22 +128,25 @@ public class LogIn extends Application{
                             actiontarget.setText("Invalid Username and Password!");
                          }
                     case "Student" :
-                        if(false){//new filemanegar().login(userTextField.getText(),pwBox.getText())){
-                            
+                        if(false){// SystemUser().login(userTextField.getText(),pwBox.getText(),User_Type){
+                        sec.close();    
                     
                         }else{
                             actiontarget.setFill(Color.RED);
                             actiontarget.setText("Invalid Username and Password!");
                         }
                     case "Admin" :
-                        if(false){//new filemanegar().login(userTextField.getText(),pwBox.getText())){
-                            
-                    
+                        if("Admin".equals(userTextField.getText())&&"12345".equals(pwBox.getText())){
+                            sec.close();
+                            try {
+                                new AdminPanal().start(therd);
+                            } catch (Exception ex) {
+                                Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }else{
                             actiontarget.setFill(Color.RED);
                             actiontarget.setText("Invalid Username and Password!");
-                        }
-                  
+                         }
                 }
                 
             }

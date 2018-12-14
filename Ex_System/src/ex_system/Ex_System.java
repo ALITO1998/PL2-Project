@@ -8,9 +8,7 @@ package ex_system;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,9 +33,12 @@ public class Ex_System extends Application {
     static String User_Type = new String();
     @Override
     public void start(Stage primaryStage) {
-        /*MenuBar menubar = new MenuBar();
+        MenuBar menubar = new MenuBar();
         Menu File = new Menu("File");
         MenuItem Exit = new MenuItem("Exit");
+        Exit.setOnAction((ActionEvent event) -> {
+            System.exit(0); //To change body of generated methods, choose Tools | Templates.
+        });
         MenuItem Restore = new MenuItem("Restore");
         MenuItem Minimize = new MenuItem("Minimize");
         MenuItem Maximize = new MenuItem("Maximize");
@@ -45,7 +46,18 @@ public class Ex_System extends Application {
         Menu Edit = new Menu("Edit");
         Menu View = new Menu("View");
         Menu Help = new Menu("Help");
-        menubar.getMenus().addAll(File,Edit,View,Help);*/
+        MenuItem help = new MenuItem("Help");
+        help.setOnAction((ActionEvent event) -> {
+            try {
+                Stage shelp = new Stage();
+                HelpPanal h = new HelpPanal();
+                h.start(shelp);//To change body of generated methods, choose Tools | Templates.
+            } catch (Exception ex) {
+                Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        Help.getItems().add(help);
+        menubar.getMenus().addAll(File,Edit,View,Help);
         Text footer = new Text("Power by : @PL_best_Team");
         Text title = new Text("Examenation System");
         title.setFont(Font.font("Tahoma",FontWeight.BOLD,FontPosture.ITALIC, 20));
@@ -55,50 +67,40 @@ public class Ex_System extends Application {
         Button btn2 = new Button("", amg3);
         Button btn1 = new Button("", amg2);
         Button btn = new Button("",amg1);
-        btn2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    User_Type = "Admin";
-                    primaryStage.close();
-                    Stage secStage = new Stage();
-                    LogIn x = new LogIn();
-                    x.start(secStage);
-                    //System.out.println("I'm a Admin");
-                } catch (Exception ex) {
-                    Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        btn2.setOnAction((ActionEvent event) -> {
+            try {
+                User_Type = "Admin";
+                primaryStage.close();
+                Stage secStage = new Stage();
+                LogIn x = new LogIn();
+                x.start(secStage);
+                //System.out.println("I'm a Admin");
+            } catch (Exception ex) {
+                Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    User_Type = "Lecturer";
-                    primaryStage.close();
-                    Stage secStage = new Stage();
-                    LogIn x = new LogIn();
-                    x.start(secStage);
-                    //System.out.println("I'm a Professor");
-                } catch (Exception ex) {
-                    Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        btn.setOnAction((ActionEvent event) -> {
+            try {
+                User_Type = "Lecturer";
+                primaryStage.close();
+                Stage secStage = new Stage();
+                LogIn x = new LogIn();
+                x.start(secStage);
+                //System.out.println("I'm a Professor");
+            } catch (Exception ex) {
+                Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        btn1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    User_Type = "Student";
-                    primaryStage.close();
-                    Stage secStage = new Stage();
-                    LogIn x = new LogIn();
-                    x.start(secStage);
-                    //System.out.println("I'm a Student");
-                } catch (Exception ex) {
-                    Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        btn1.setOnAction((ActionEvent event) -> {
+            try {
+                User_Type = "Student";
+                primaryStage.close();
+                Stage secStage = new Stage();
+                LogIn x = new LogIn();
+                x.start(secStage);
+                //System.out.println("I'm a Student");
+            } catch (Exception ex) {
+                Logger.getLogger(Ex_System.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         BorderPane root1 = new BorderPane();
@@ -112,7 +114,7 @@ public class Ex_System extends Application {
         root.add(btn2,2,1);
         root.setPadding(new Insets(25, 25, 25, 25));
         root1.setCenter(root);
-        //root1.setTop(menubar);
+        root1.setTop(menubar);
         root1.setBottom(footer);
         Scene scene = new Scene(root1);
         
